@@ -4,25 +4,25 @@
 
 [![PyPI](https://img.shields.io/pypi/v/twint.svg)](https://pypi.org/project/twint/) [![Build Status](https://travis-ci.org/twintproject/twint.svg?branch=master)](https://travis-ci.org/twintproject/twint) [![Python 3.5|3.6](https://img.shields.io/badge/Python-3.5%2F3.6-blue.svg)](https://www.python.org/download/releases/3.0/) [![GitHub license](https://img.shields.io/github/license/haccer/tweep.svg)](https://github.com/haccer/tweep/blob/master/LICENSE)
 
->No authentication. No API. No limits.
+> Sin autenticación. Sin API. Sin limites.
 
-Twint is an advanced Twitter scraping tool written in Python that allows for scraping Tweets from Twitter profiles **without** using Twitter's API.
+Twint es una herramienta avanzada de búsqueda de Twitter escrita en Python que permite buscar Tweets de los perfiles de Twitter ** sin ** usar la API de Twitter.
 
-Twint utilizes Twitter's search operators to let you scrape Tweets from specific users, scrape Tweets relating to certain topics, hashtags & trends, or sort out *sensitive* information from Tweets like e-mail and phone numbers. I find this very useful, and you can get really creative with it too.
+Twint utiliza los operadores de búsqueda de Twitter para permitirle extraer Tweets de usuarios específicos, eliminar Tweets relacionados con ciertos temas, hashtags y tendencias, u ordenar información * confidencial * de Tweets como el correo electrónico y los números de teléfono. Es muy útil, y da mucho lugar para la creatividad.
 
-Twint also makes special queries to Twitter allowing you to also scrape a Twitter user's followers, Tweets a user has liked, and who they follow **without** any authentication, API, Selenium, or browser emulation.
+Twint también realiza consultas especiales a Twitter, lo que le permite también buscar los seguidores de un usuario de Twitter, los Tweets que le han gustado a un usuario y a quién sigue ** sin ** ninguna autenticación, API, Selenium o emulación de navegador.
 
-## tl;dr Benefits
-Some of the benefits of using Twint vs Twitter API:
-- Can fetch almost __all__ Tweets (Twitter API limits to last 3200 Tweets only);
-- Fast initial setup;
-- Can be used anonymously and without Twitter sign up;
-- **No rate limitations**.
+## Beneficios
+Algunos de los beneficios de usar Twint vs Twitter API:
+- Puede obtener casi __todos los Tweets (los límites de la API de Twitter son solo para los últimos 3200 Tweets);
+- Configuración inicial rápida;
+- Se puede utilizar de forma anónima y sin registrarse en Twitter;
+- ** Sin limitaciones de tarifas **.
 
-## Limits imposed by Twitter
-Twitter limits scrolls while browsing the user timeline. This means that with `.Profile` or with `.Favorites` you will be able to get ~3200 tweets.
+## Límites impuestos por Twitter
+Twitter limita los desplazamientos mientras navega por la el perfil del usuario. Esto significa que con `.Profile` o con` .Favorites` podrás obtener ~ 3200 tweets.
 
-## Requirements
+## Requisitos
 - Python 3.6;
 - aiohttp;
 - aiodns;
@@ -36,7 +36,7 @@ Twitter limits scrolls while browsing the user timeline. This means that with `.
 - geopy;
 - fake-useragent.
 
-## Installing
+## Instalación
 
 **Git:**
 ```bash
@@ -49,7 +49,7 @@ pip3 install -r requirements.txt
 pip3 install twint
 ```
 
-or
+ó
 
 ```bash
 pip3 install --user --upgrade -e git+https://github.com/twintproject/twint.git@origin/master#egg=twint
@@ -59,36 +59,35 @@ pip3 install --user --upgrade -e git+https://github.com/twintproject/twint.git@o
 ```bash
 pipenv install -e git+https://github.com/twintproject/twint.git#egg=twint
 ```
+CLI Ejemplos básicos y combos
+Algunos ejemplos simples para ayudarlo a comprender los conceptos básicos:
 
-## CLI Basic Examples and Combos
-A few simple examples to help you understand the basics:
+- `twint -u username` - Elimine todos los Tweets de la línea de tiempo de * user *.
+- `twint -u username -s pineapple` - Elimine todos los Tweets de la línea de tiempo del * usuario * que contenga _pineapple_.
+- `twint -s pineapple` - Recoge cada Tweet que contenga * pineapple * de los Tweets de todos.
+- `twint -u username --year 2014` - Recopila tweets que fueron tuiteados ** antes de ** 2014.
+- `twint -u username --desde 2015-12-20` - Recopila tweets que se tuitearon desde 2015-12-20.
+- `twint -u username -o file.txt` - Raspe los Tweets y guárdelos en file.txt.
+- `twint -u username -o file.csv --csv` - Raspe los Tweets y guárdelos como un archivo csv.
+- `twint -u username --email --phone` - Muestra Tweets que pueden tener números de teléfono o direcciones de correo electrónico.
+- `twint -s" Donald Trump "--verified` - Muestra tweets de usuarios verificados que tuitearon sobre Donald Trump.
+- `twint -g =" 48.880048,2.385939,1km "-o file.csv --csv` - Raspe Tweets desde un radio de 1 km alrededor de un lugar en París y expórtelos a un archivo csv.
+- `twint -u username -es localhost: 9200` - Salida de Tweets a Elasticsearch
+- `twint -u username -o file.json --json` - Raspe los Tweets y guárdelos como un archivo json.
+- `twint -u username --database tweets.db` - Guarda Tweets en una base de datos SQLite.
+- `twint -u username --followers` - Raspe a los seguidores de un usuario de Twitter.
+- `twint -u username --siguiendo` - Raspe a quien sigue un usuario de Twitter.
+- `twint -u username --favorites` - Recopila todos los Tweets que un usuario ha favorecido (reúne ~ 3200 tweet).
+- `twint -u username --siguiendo --user-full` - Recopila información completa del usuario que una persona sigue
+- `twint -u username --profile-full` - Use un método lento pero efectivo para recopilar Tweets del perfil de un usuario (Recolecta ~ 3200 Tweets, Incluidos Retweets).
+- `twint -u username --retweets` - Use un método rápido para reunir los últimos 900 Tweets (que incluyen retweets) del perfil de un usuario.
+- `twint -u username --resume resume_file.txt` - Reanuda una búsqueda comenzando desde la última ID de desplazamiento guardada.
 
-- `twint -u username` - Scrape all the Tweets from *user*'s timeline.
-- `twint -u username -s pineapple` - Scrape all Tweets from the *user*'s timeline containing _pineapple_.
-- `twint -s pineapple` - Collect every Tweet containing *pineapple* from everyone's Tweets.
-- `twint -u username --year 2014` - Collect Tweets that were tweeted **before** 2014.
-- `twint -u username --since 2015-12-20` - Collect Tweets that were tweeted since 2015-12-20.
-- `twint -u username -o file.txt` - Scrape Tweets and save to file.txt.
-- `twint -u username -o file.csv --csv` - Scrape Tweets and save as a csv file.
-- `twint -u username --email --phone` - Show Tweets that might have phone numbers or email addresses.
-- `twint -s "Donald Trump" --verified` - Display Tweets by verified users that Tweeted about Donald Trump.
-- `twint -g="48.880048,2.385939,1km" -o file.csv --csv` - Scrape Tweets from a radius of 1km around a place in Paris and export them to a csv file.
-- `twint -u username -es localhost:9200` - Output Tweets to Elasticsearch
-- `twint -u username -o file.json --json` - Scrape Tweets and save as a json file.
-- `twint -u username --database tweets.db` - Save Tweets to a SQLite database.
-- `twint -u username --followers` - Scrape a Twitter user's followers.
-- `twint -u username --following` - Scrape who a Twitter user follows.
-- `twint -u username --favorites` - Collect all the Tweets a user has favorited (gathers ~3200 tweet).
-- `twint -u username --following --user-full` - Collect full user information a person follows
-- `twint -u username --profile-full` - Use a slow, but effective method to gather Tweets from a user's profile (Gathers ~3200 Tweets, Including Retweets).
-- `twint -u username --retweets` - Use a quick method to gather the last 900 Tweets (that includes retweets) from a user's profile.
-- `twint -u username --resume resume_file.txt` - Resume a search starting from the last saved scroll-id.
+Más detalles sobre los comandos y opciones se encuentran en el [wiki] (https://github.com/twintproject/twint/wiki/Commands)
 
-More detail about the commands and options are located in the [wiki](https://github.com/twintproject/twint/wiki/Commands)
+## Ejemplo de módulo
 
-## Module Example
-
-Twint can now be used as a module and supports custom formatting. **More details are located in the [wiki](https://github.com/twintproject/twint/wiki/Module)**
+Twint ahora se puede usar como módulo y es compatible con el formato personalizado. ** Más detalles se encuentran en la [wiki] (https://github.com/twintproject/twint/wiki/Module) **
 
 ```python
 import twint
@@ -102,7 +101,7 @@ c.Format = "Tweet id: {id} | Tweet: {tweet}"
 # Run
 twint.run.Search(c)
 ```
-> Output
+> Salida
 
 `955511208597184512 2018-01-22 18:43:19 GMT <now> pineapples are the best fruit`
 
@@ -121,63 +120,57 @@ c.Output = "none"
 twint.run.Search(c)
 ```
 
-## Storing Options
-- Write to file;
+## Opciones de almacenamiento
+- Escribir en el archivo;
 - CSV;
-- JSON;
+- JSON
 - SQLite;
 - Elasticsearch.
 
-## Elasticsearch Setup
+## Configuración de Elasticsearch
 
-Details on setting up Elasticsearch with Twint is located in the [wiki](https://github.com/twintproject/twint/wiki/Elasticsearch).
+Los detalles sobre la configuración de Elasticsearch con Twint se encuentran en [wiki] (https://github.com/twintproject/twint/wiki/Elasticsearch).
 
-## Graph Visualization
-![graph](https://i.imgur.com/EEJqB8n.png)
+## Visualización gráfica
+! [gráfico] (https://i.imgur.com/EEJqB8n.png)
 
-[Graph](https://github.com/twintproject/twint/wiki/Graph) details are also located in the [wiki](https://github.com/twintproject/twint/wiki/Graph).
+Los detalles de [Gráfico] (https://github.com/twintproject/twint/wiki/Graph) también se encuentran en el [wiki] (https://github.com/twintproject/twint/wiki/Graph).
 
-We are developing a Twint Desktop App.
+Estamos desarrollando una aplicación de escritorio Twint.
 
-![4](https://i.imgur.com/DzcfIgL.png)
+! [4] (https://i.imgur.com/DzcfIgL.png)
 
-## FAQ
-> I tried scraping tweets from a user, I know that they exist but I'm not getting them
+## PREGUNTAS MÁS FRECUENTES
+> Intenté quitarle tweets a un usuario, sé que existen pero no los entiendo
 
-Twitter can shadow-ban accounts, which means that their tweets will not be available via search. To solve this, pass `--profile-full` if you are using Twint via CLI or, if are using Twint as module, add `config.Profile_full = True`. Please note that this process will be quite slow.
-## More Examples
+Twitter puede prohibir las cuentas, lo que significa que sus tweets no estarán disponibles a través de la búsqueda. Para resolver esto, pase `--profile-full` si está usando Twint a través de CLI o, si está usando Twint como módulo, agregue` config.Profile_full = True`. Tenga en cuenta que este proceso será bastante lento.
+## Más ejemplos
 
-#### Followers/Following
+#### Seguidores Siguiendo
 
-> To get only follower usernames/following usernames
+> Para obtener solo nombres de usuario seguidor / siguientes nombres de usuario
 
 `twint -u username --followers`
 
 `twint -u username --following`
 
-> To get user info of followers/following users
+> Para obtener información del usuario de seguidores / usuarios siguientes
 
 `twint -u username --followers --user-full`
 
 `twint -u username --following --user-full`
 
-#### userlist
+#### Lista de usuarios
 
-> To get only user info of user
+> Para obtener solo la información del usuario
 
 `twint -u username --user-full`
 
-> To get user info of users from a userlist
+> Para obtener información de los usuarios de una lista de usuarios
 
 `twint --userlist inputlist --user-full`
 
-## Featured Blog Posts:
+## Publicaciones de blog destacadas:
 - https://pielco11.ovh/posts/twint-osint/
 - https://null-byte.wonderhowto.com/how-to/mine-twitter-for-targeted-information-with-twint-0193853/
 - https://towardsdatascience.com/analyzing-tweets-with-nlp-in-minutes-with-spark-optimus-and-twint-a0c96084995f
-
-## Contact
-
-If you have any questions, want to join in on discussions, or need extra help, you are welcome to join our Twint focused [Slack server](https://join.slack.com/t/os-int/shared_invite/enQtNDI1MDA2OTg4MDg0LWUxYWNmMjI2MGFlMTZjZjhmOWY1ZTVhNmFiMDU2NzY1MzhiMDI2ZTZmYmEwY2MxY2YzMGFkZTY2MTcxZWI2ODM).
-
-If you are interested in OSINT and still seeking for help or suggestions, join the OSINT community at [OSINT Team](https://osint.team) (there is a specific Twint channel)
