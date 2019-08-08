@@ -6,18 +6,18 @@
 
 > Sin autenticación. Sin API. Sin limites.
 
-Twint es una herramienta avanzada de búsqueda de Twitter escrita en Python que permite buscar Tweets de los perfiles de Twitter ** sin ** usar la API de Twitter.
+Twint es una herramienta avanzada de búsqueda de Twitter escrita en Python que permite buscar Tweets de los perfiles de Twitter **sin** usar la API de Twitter.
 
 Twint utiliza los operadores de búsqueda de Twitter para permitirle extraer Tweets de usuarios específicos, eliminar Tweets relacionados con ciertos temas, hashtags y tendencias, u ordenar información * confidencial * de Tweets como el correo electrónico y los números de teléfono. Es muy útil, y da mucho lugar para la creatividad.
 
-Twint también realiza consultas especiales a Twitter, lo que le permite también buscar los seguidores de un usuario de Twitter, los Tweets que le han gustado a un usuario y a quién sigue ** sin ** ninguna autenticación, API, Selenium o emulación de navegador.
+Twint también realiza consultas especiales a Twitter, lo que le permite también buscar los seguidores de un usuario de Twitter, los Tweets que le han gustado a un usuario y a quién sigue **sin** ninguna autenticación, API, Selenium o emulación de navegador.
 
 ## Beneficios
 Algunos de los beneficios de usar Twint vs Twitter API:
 - Puede obtener casi __todos los Tweets (los límites de la API de Twitter son solo para los últimos 3200 Tweets);
 - Configuración inicial rápida;
 - Se puede utilizar de forma anónima y sin registrarse en Twitter;
-- ** Sin limitaciones de tarifas **.
+- **Sin limitaciones de tarifas**.
 
 ## Límites impuestos por Twitter
 Twitter limita los desplazamientos mientras navega por la el perfil del usuario. Esto significa que con `.Profile` o con` .Favorites` podrás obtener ~ 3200 tweets.
